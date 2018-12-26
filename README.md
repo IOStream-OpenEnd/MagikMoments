@@ -25,6 +25,18 @@ To complete the project we need to do the following task one by one.
 
 - [x] Convert those frames into a video. (Merging frames)
 
-The whole project will most probably be in 2 or 3 modules.
+#Action Plan for Machine Learning Part
 
-One will be for input/output. Another will implement machine learning.
+- [ ] We need dataset to feed the Machine Learning algorithm.
+
+- [ ] We need to minimize the noise from the images. To do this, we will need to crop the image and convert it to grayscale.
+
+- [ ] If one image have 2 faces, we will need to resolve that problem.
+
+- [ ] Then we will use OpenCV's HAAR filters and cascades for facial detection.
+
+- [ ] Next We will need an algorithm to classify that facial image according to emotion.
+
+- [ ] We will use array index to compare frames with images and get only those frames which are classified as happy.
+
+- [ ] The control will switch back to merging the frames.
