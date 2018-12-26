@@ -15,17 +15,15 @@ TBD
 
 To complete the project we need to do the following task one by one.
 
-- Find a Python Module that can take video file (.mp4 or something) and convert it into frames.
+- [x] Find a Python Module that can take video file (.mp4 or something) and convert it into frames. (OpenCV)
 
-- implement that module into our code.
+- [x] implement that module into our code. (Creating frames)
 
-- Save the frames into an array.
+- [ ] Save the frames into an array.
 
-- Check which frames are magic moments using images processing and machine learning.
+- [ ] Check which frames are magic moments using images processing and machine learning.
 
-- Convert those frames into a video.
-
-- Output the video.
+- [x] Convert those frames into a video. (Merging frames)
 
 The whole project will most probably be in 2 or 3 modules.
 
