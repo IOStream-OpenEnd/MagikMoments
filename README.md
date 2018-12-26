@@ -29,11 +29,11 @@ To complete the project we need to do the following task one by one.
 
 - [ ] We need dataset to feed the Machine Learning algorithm.
 
-- [ ] We need to minimize the noise from the images. To do this, we will need to crop the image and convert it to grayscale.
+- [x] We will use OpenCV's HAAR filters and cascades for facial detection.
+
+- [x] Then we need to minimize the noise from the images. To do this, we will need to crop the image and convert it to grayscale.
 
 - [ ] If one image have 2 faces, we will need to resolve that problem.
-
-- [ ] Then we will use OpenCV's HAAR filters and cascades for facial detection.
 
 - [ ] Next We will need an algorithm to classify that facial image according to emotion.
 
