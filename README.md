@@ -27,7 +27,7 @@ To complete the project we need to do the following task one by one.
 
 ## Action Plan for Machine Learning Part
 
-- [ ] We need dataset to feed the Machine Learning algorithm.
+- [x] We need dataset to feed the Machine Learning algorithm. (Datasets listed in one open issue)
 
 - [x] We will use OpenCV's HAAR filters and cascades for facial detection.
 
@@ -36,6 +36,8 @@ To complete the project we need to do the following task one by one.
 - [ ] If one image have 2 faces, we will need to resolve that problem.
 
 - [ ] Next We will need an algorithm to classify that facial image according to emotion.
+- For more accuraccy, first we train ML on what are faces and what are not.
+Then we train on happy and not happy and finally predict
 
 - [ ] We will use array index to compare frames with images and get only those frames which are classified as happy.
 
