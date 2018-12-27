@@ -21,7 +21,9 @@ To complete the project we need to do the following task one by one.
 
 - [x] Save the frames into an array. (We can use a generator function and directly work on the images. It is also CPU/memory efficient)
 
-- [ ] Check which frames are magic moments using images processing and machine learning.
+- [x] Detect human faces from frames. (Faces are recognizable in PR 14)
+
+- [ ] Check which faces are magic moments using images processing and machine learning.
 
 - [x] Convert those frames into a video. (Merging frames)
 
@@ -33,12 +35,10 @@ To complete the project we need to do the following task one by one.
 
 - [x] Then we need to minimize the noise from the images. To do this, we will need to crop the image and convert it to grayscale.
 
-- [ ] If one image have 2 faces, we will need to resolve that problem.
+- [x] If one image have 2 faces, we will need to resolve that problem.(Resolved)
 
-- [ ] Next We will need an algorithm to classify that facial image according to emotion.
-- For more accuraccy, first we train ML on what are faces and what are not.
-Then we train on happy and not happy and finally predict
+- [ ] Next we need an algorithm to classify that facial image according to emotion.
 
-- [ ] We will use array index to compare frames with images and get only those frames which are classified as happy.
+- [ ] We will use array index to compare frames with images and get only those frames which are classified as happy. (Only happy ?)
 
 - [x] The control will switch back to merging the frames. (If merging dynamically, then that can also be done. Currently, we assume that we are combining stored images)
