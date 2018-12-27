@@ -21,6 +21,8 @@ class MyClassifier:
 			count += 1
 
 	def detect_face(self, img, face_cascade):
+		'''Another Generator function that yields faces from the frame'''
+		
 		gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 		faces = face_cascade.detectMultiScale(gray, 1.3, 5) #detect in gray
 		for (x,y,w,h) in faces:
