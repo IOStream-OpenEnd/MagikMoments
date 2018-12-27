@@ -45,9 +45,11 @@ To complete the project we need to do the following task one by one.
 
 - [x] Detect faces from the frames. Should be able to detect multiple faces in one image.
 
-- [ ] Detect emotion from the faces.
+- [ ] Detect hyper emotion from the faces.
 
-- [ ] For each hyper emotion(more like so much emotion), create a mini video containing 2 secs before the emotion and 2 secs after.
+- [ ] Use timestamps or array or something to store the exact time/frame for the trim.
+
+- [ ] For each hyper emotion(more like so much emotion), from the original video create a mini video containing 2 secs before the emotion and 2 secs after.
 
 - [ ] Include audio in those mini videos. Either don't remove it during the trim or add it appropriately as per the original later. 
 
