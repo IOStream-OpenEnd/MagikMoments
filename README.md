@@ -1,60 +1,41 @@
 # MagikMoments
 
-Finds the "magic" and the most happy moments of a given movie and makes a trailer out of it
-few changes
+Finds the "magic" and the most happy moments of a given movie and makes a trailer out of it.
 
-# Requirements
 
-To run the code The following needs to be installed.
-- Python 3.x
-- OpneCV
-- Numpy
+## Requirements :
 
-# Installation procedure
+Need a working Python 3.6 environment along with pip installed. 
 
-Follow the process to install open CV.
+To install the external modules, open cmd/terminal and navigate inside the MagikMoments directory.
+Then run :
+* On windows :
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-1. Open the terminal and install all dependencies
+* On Linux :
+    ```bash
+    pip3 install -r requiremnts.txt 
+    ```
+## Running the code :
 
-sudo apt-get install --assume-yes build-essential cmake git
-sudo apt-get install --assume-yes pkg-config unzip ffmpeg qtbase5-dev python-dev python3-dev python-numpy python3-numpy
-sudo apt-get install --assume-yes libopencv-dev libgtk-3-dev libdc1394-22 libdc1394-22-dev libjpeg-dev libpng12-dev libtiff5-dev libjasper-dev
-sudo apt-get install --assume-yes libavcodec-dev libavformat-dev libswscale-dev libxine2-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
-sudo apt-get install --assume-yes libv4l-dev libtbb-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev
-sudo apt-get install --assume-yes libvorbis-dev libxvidcore-dev v4l-utils vtk6
-sudo apt-get install --assume-yes liblapacke-dev libopenblas-dev libgdal-dev checkinstall
+Open CMD/Terminal, navigate inside MagikMoments/src/Test1/ directory and run :
+* On Windows :
+    ```bash
+    python classifier.py
+    ``` 
+* On Linux :
+    ```bash
+    python3 classifier.py
+    ```
 
-2. Download the OpenCV Source and unzip the file and change to the OpenCV folder
+## Working (Internal):
 
-wget -O opencv.zip https://github.com/opencv/opencv/archive/3.3.0.zip
-unzip opencv.zip
-cd opencv-3.3.0
-
-3. Execute Make and compile with multiple processors
-
-mkdir build
-cd build/    
-cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D FORCE_VTK=ON -D WITH_TBB=ON -D WITH_V4L=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D WITH_CUBLAS=ON -D CUDA_NVCC_FLAGS="-D_FORCE_INLINES" -D WITH_GDAL=ON -D WITH_XINE=ON -D BUILD_EXAMPLES=ON ..
-make -j $(($(nproc) + 1))
-
-4. Install OpenCV
-
-udo make install
-sudo /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'
-sudo ldconfig
-sudo apt-get update
-
-5. Testing your OpenCV Install using Python
-
-$ python
->>> import cv2
->>> cv2.__version__
-
-Credit for Installation procedure : http://carlosdeoliveira.net/en/general/install-opencv-3-3-0-for-linux-mint-18-2ubuntu-for-deep-learning/
-
-# Running the code
-
-TBD
+1. Specify the video file to be used.
+2. The video file will be sent to `create_frames` method which is a generator function yielding frames.
+3. The frame from `create_frames` will be passed to `detect_face` method which will check for faces and display if any found.
+4. All the face images will be stored in the global array - `frame_array` which will be for creating the final output by combining all the frames. 
 
 # Action Plan for Complete Project
 
