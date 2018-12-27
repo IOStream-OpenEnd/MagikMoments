@@ -36,6 +36,7 @@ Open CMD/Terminal, navigate inside MagikMoments/src/Test1/ directory and run :
 2. The video file will be sent to `create_frames` method which is a generator function yielding frames.
 3. The frame from `create_frames` will be passed to `detect_face` method which will check for faces and display if any found.
 4. All the face images will be stored in the global array - `frame_array` which will be for creating the final output by combining all the frames. 
+
 # Action Plan for Complete Project
 
 To complete the project we need to do the following task one by one.
