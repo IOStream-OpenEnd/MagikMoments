@@ -75,18 +75,9 @@ class MyClassifier:
 
 		global frame_array
 
-		smile = smile_detector.detectMultiScale(img, scaleFactor=1.1, minNeighbors=10, minSize=(5, 5), flags=cv2.CASCADE_SCALE_IMAGE)
-		for (x, y, w, h) in smile: 
-		#If any smile image then resize & return along with frame_no
-			try:
-				img = cv2.rectangle(img, (x, y), (x+w, y+h), (255,0,0), 2)
-				img = cv2.resize(img, (350, 350)) # resize each image to 350x350
-				frame_array.append((img,  frame_no))
-				print(frame_array)
-				return True
-			except Exception as e:
-				print(e)
-				return False
+		# Check for emotions and finally add emotion images to frame_array
+
+		pass
 
 
 	def show_face(self, img):
@@ -111,6 +102,7 @@ class MyClassifier:
 
 		global frame_array
 
+		# If size not give take from the first image
 		if size is None:
 			img = cv2.imread(frame_array[0][0])
 			height, width, layers = img.shape
@@ -141,7 +133,7 @@ face_detector4 = cv2.CascadeClassifier("haarcascade_frontalface_alt_tree.xml")
 
 classifier = MyClassifier()
 
-for frame in classifier.create_frames("big11mbvid.mp4"): # Get frame
+for frame in classifier.create_frames("sample_video.mp4"): # Get frame
 	for face in classifier.detect_face(frame): # Check for a face
 		classifier.show_face(face)
 
