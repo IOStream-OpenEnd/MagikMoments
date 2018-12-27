@@ -16,13 +16,13 @@ for img in create_frames("abc.mp4"):
     pass
 
 
-#importing the All the face-detecting Cascade
+#importing the All the face-detecting Cascade of HAAR cascade from OpenCV
 face_detector1 = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 face_detector2 = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
 face_detector3 = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
 face_detector4 = cv2.CascadeClassifier("haarcascade_frontalface_alt_tree.xml")
 
-#Reading the file
+#Reading the file (ony for testing)
 img = cv2.imread("index.jpeg") #This line is not required because of the create_frames sends us images
 
 #Converting it to grayscale
@@ -34,46 +34,27 @@ faces2 = face_detector2.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=10,
 faces3 = face_detector3.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=10, minSize=(5, 5), flags=cv2.CASCADE_SCALE_IMAGE)
 faces4 = face_detector4.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=10, minSize=(5, 5), flags=cv2.CASCADE_SCALE_IMAGE)
 
-#Crop the gray image to only face
-for (x,y,w,h) in faces1:
-	gray = gray[y:y+h, x:x+w]
+#Checking which Cascade detected a face and output only that image which detected a face.
+if(len(faces1)>0):
+    detected_face=faces1
+elif(len(faces2)>0):
+    detected_face=faces2
+elif(len(faces3)>0):
+    detected_face=faces3
+elif(len(faces4)>0):
+    detected_face=faces4
+else:
+    detected_face=""
 
-#Resize the image and output.
-try:
-    out = cv2.resize(gray, (350, 350)) #Resize face so all images have same size
-    cv2.imwrite("index1.jpeg", out) #Write image
-except:
-    pass
+#if statement to check whether a face was detected or not
+if(detected_face is not ""):
+    #Crop the gray image so that it only contain face
+    for (x,y,w,h) in detected_face:
+	   gray = gray[y:y+h, x:x+w]
 
-#Crop the gray image to only face
-for (x,y,w,h) in faces2:
-    gray = gray[y:y+h, x:x+w]
-
-#Resize the image and output.
-try:
-    out = cv2.resize(gray, (350, 350)) #Resize face so all images have same size
-    cv2.imwrite("index2.jpeg", out) #Write image
-except:
-    pass
-
-#Crop the gray image to only face
-for (x,y,w,h) in faces3:
-    gray = gray[y:y+h, x:x+w]
-
-#Resize the image and output.
-try:
-    out = cv2.resize(gray, (350, 350)) #Resize face so all images have same size
-    cv2.imwrite("index3.jpeg", out) #Write image
-except:
-    pass
-
-#Crop the gray image to only face
-for (x,y,w,h) in faces4:
-    gray = gray[y:y+h, x:x+w]
-
-#Resize the image and output.
-try:
-    out = cv2.resize(gray, (350, 350)) #Resize face so all images have same size
-    cv2.imwrite("index4.jpeg", out) #Write image
-except:
-    pass
+    #Resize the image and output.
+    try:
+        out = cv2.resize(gray, (350, 350)) #Resize face so all images have same size
+        cv2.imwrite("index1.jpeg", out) #Write image
+    except:
+        pass
