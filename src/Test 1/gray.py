@@ -4,8 +4,6 @@ import numpy as np
 import cv2
 
 import create
-import combine
-
 
 video_file = 'abc.mp4'
 for img in create_frames("abc.mp4"):
@@ -79,13 +77,3 @@ try:
     cv2.imwrite("index4.jpeg", out) #Write image
 except:
     pass
-
-
-
-frames_directory = 'frames/'
-save_name = 'abc.mp4'
-fps = 25.0
-convert_frames_to_video(frames_directory, save_name, fps)
-
-# Finally
-#cv.destroyAllWindows()
