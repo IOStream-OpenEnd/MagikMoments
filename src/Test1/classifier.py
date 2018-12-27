@@ -9,8 +9,8 @@ class MyClassifier:
 	def __init__(self):
 		pass
 
-
-	def create_frames(self, video_file):
+	@staticmethod
+	def create_frames(video_file):
 		"""Generator function that yields frames of the video
 
 		Arguments : 
@@ -27,8 +27,8 @@ class MyClassifier:
 			print(f'Read frame {frame_no}:', success)
 			frame_no += 1
 
-
-	def detect_face(self, img):
+	@staticmethod
+	def detect_face(img):
 		"""Generator function that yields faces from frame
 		
 		Arguments :
@@ -39,6 +39,7 @@ class MyClassifier:
 		global face_detector2
 		global face_detector3
 		global face_detector4
+		global detected_faces
 
 		gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # Convert img to GrayScale
 		#faces = face_cascade.detectMultiScale(gray, 1.3, 5) #detect in gray
@@ -48,7 +49,7 @@ class MyClassifier:
 		faces3 = face_detector3.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=10, minSize=(5, 5), flags=cv2.CASCADE_SCALE_IMAGE)
 		faces4 = face_detector4.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=10, minSize=(5, 5), flags=cv2.CASCADE_SCALE_IMAGE)
 
-        #Checking which Cascade detected a face and output only that image which detected a face.
+		#Checking which Cascade detected a face and output only that image which detected a face.
 		if len(faces1) > 0:
 			detected_faces = faces1
 		elif len(faces2) > 0:
@@ -65,12 +66,11 @@ class MyClassifier:
 				img = cv2.rectangle(img, (x, y), (x+w, y+h), (255,0,0), 2)
 				yield img[y:y+h, x:x+h] #crop color image to face & yield
 
-
-	def check_smile(self, img):
-		"""Check for smile inside face image
+	@staticmethod
+	def check_emotion():
+		"""Check for emotion inside face image
 
 		Arguments :
-		img = The numpy object with picture as a set of matices
 		"""
 
 		global frame_array
@@ -79,8 +79,8 @@ class MyClassifier:
 
 		pass
 
-
-	def show_face(self, img):
+	@staticmethod
+	def show_face(img):
 		"""Displays the image.
 
 		Arguments :
@@ -90,8 +90,8 @@ class MyClassifier:
 		cv2.imshow('Image', img)
 		cv2.waitKey(2) # Display for 2 secs only
 
-
-	def output(self, file_name, fps, size=None):
+	@staticmethod
+	def output(file_name, fps, size=None):
 		"""Combines the frames into video.
 
 		Arguments :
@@ -117,8 +117,8 @@ class MyClassifier:
 
 		out.release() # save/release output file
 
-
-	def destroy(self):
+	@staticmethod
+	def destroy():
 		cv2.destroyAllWindows()
 
 
