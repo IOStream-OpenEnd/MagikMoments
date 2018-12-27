@@ -1,8 +1,11 @@
+import time
+
 import numpy as np
 import cv2
+
 import create
 import combine
-import time
+
 
 video_file = 'abc.mp4'
 for img in create_frames("abc.mp4"):
