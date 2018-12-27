@@ -50,6 +50,8 @@ $ python
 >>> import cv2
 >>> cv2.__version__
 
+Credit for Installation procedure : http://carlosdeoliveira.net/en/general/install-opencv-3-3-0-for-linux-mint-18-2ubuntu-for-deep-learning/
+
 # Running the code
 
 TBD
