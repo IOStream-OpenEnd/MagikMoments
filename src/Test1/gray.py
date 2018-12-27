@@ -7,6 +7,10 @@ import create
 
 class detect_convert:
     def __init__(self):
+
+        self.detected_face = ""
+        self.gray = ""
+
         self.detected_face=""
         self.gray=""
 
@@ -22,12 +26,15 @@ class detect_convert:
     pass
     """
 
+
     def detect(self):
         #importing the All the face-detecting Cascade of HAAR cascade from OpenCV
         face_detector1 = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
         face_detector2 = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
         face_detector3 = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
         face_detector4 = cv2.CascadeClassifier("haarcascade_frontalface_alt_tree.xml")
+
+        smile_detector = cv2.CascadeClassifier("haarcascade_smile.xml")
 
         #Reading the file (ony for testing)
         img = cv2.imread("index.jpeg") #This line is not required because of the create_frames sends us images
@@ -70,3 +77,4 @@ class detect_convert:
 p=detect_convert()
 p.detect()
 p.output()
+
