@@ -7,8 +7,25 @@ import create
 
 class detect_convert:
     def __init__(self):
+
         self.detected_face = ""
         self.gray = ""
+
+        self.detected_face=""
+        self.gray=""
+
+    """
+    video_file = 'abc.mp4'
+    for img in create_frames("abc.mp4"):
+    # This will display the each frame 100 secs
+    #cv2.imshow('image',img)
+    #cv2.waitKey(0)
+    #time.sleep(10)
+
+    # img can be used directly for further processing
+    pass
+    """
+
 
     def detect(self):
         #importing the All the face-detecting Cascade of HAAR cascade from OpenCV
@@ -16,6 +33,7 @@ class detect_convert:
         face_detector2 = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
         face_detector3 = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
         face_detector4 = cv2.CascadeClassifier("haarcascade_frontalface_alt_tree.xml")
+
         smile_detector = cv2.CascadeClassifier("haarcascade_smile.xml")
 
         #Reading the file (ony for testing)
@@ -59,3 +77,4 @@ class detect_convert:
 p=detect_convert()
 p.detect()
 p.output()
+
