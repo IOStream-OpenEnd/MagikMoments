@@ -1,8 +1,8 @@
 
-# coding: utf-8
-
-# In[1]:
-
+#The program uses a tensorflow backend along with Keras and Scikit Learn
+# The strategy used is transfer learning.
+# The model used is a pretrained VGG-16 (a pretrained 16 layer convolutional neural net)
+# The term verbose at certain places is just to show the training in an animated fasion
 
 import numpy as np
 import os
