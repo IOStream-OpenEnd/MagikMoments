@@ -7,7 +7,7 @@ Finds the "magic" and the most happy moments of a given movie and makes a traile
 
 Need a working Python 3.6 environment along with pip installed. 
 
-To install the external modules, open cmd/terminal and navigate inside the MagikMoments directory.
+To install the external modules, open CMD/Terminal and navigate inside the MagikMoments directory.
 Then run :
 * On windows :
     ```bash
@@ -37,34 +37,24 @@ Open CMD/Terminal, navigate inside MagikMoments/src/Test1/ directory and run :
 3. The frame from `create_frames` will be passed to `detect_face` method which will check for faces and display if any found.
 4. All the face images will be stored in the global array - `frame_array` which will be for creating the final output by combining all the frames. 
 
-# Action Plan for Complete Project
+# Action Plan for Complete Project (Revised) :
 
 To complete the project we need to do the following task one by one.
 
-- [x] Find a Python Module that can take video file (.mp4 or something) and convert it into frames. (OpenCV)
+- [x] Create frames of given video.
 
-- [x] implement that module into our code. (Creating frames)
+- [x] Detect faces from the frames. Should be able to detect multiple faces in one image.
 
-- [x] Save the frames into an array. (We can use a generator function and directly work on the images. It is also CPU/memory efficient)
+- [ ] Detect hyper emotion from the faces.
 
-- [x] Detect human faces from frames. (Faces are recognizable in PR 14)
+- [ ] Use timestamps or array or something to store the exact time/frame for the trim.
 
-- [ ] Check which faces are magic moments using images processing and machine learning.
+- [ ] For each hyper emotion(more like so much emotion), from the original video create a mini video containing 2 secs before the emotion and 2 secs after.
 
-- [x] Convert those frames into a video. (Merging frames)
+- [ ] Include audio in those mini videos. Either don't remove it during the trim or add it appropriately as per the original later. 
 
-## Action Plan for Machine Learning Part
+- [ ] Combine all the mini videos into a single.
 
-- [x] We need dataset to feed the Machine Learning algorithm. (Datasets listed in one open issue)
+- [ ] Perform Test Driven Development (TDD) using any testing framework.
 
-- [x] We will use OpenCV's HAAR filters and cascades for facial detection.
-
-- [x] Then we need to minimize the noise from the images. To do this, we will need to crop the image and convert it to grayscale.
-
-- [x] If one image have 2 faces, we will need to resolve that problem.(Resolved)
-
-- [ ] Next we need an algorithm to classify that facial image according to emotion.
-
-- [ ] We will use array index to compare frames with images and get only those frames which are classified as happy. (Only happy ?)
-
-- [x] The control will switch back to merging the frames. (If merging dynamically, then that can also be done. Currently, we assume that we are combining stored images)
+- [ ] Create documentation for the project.
