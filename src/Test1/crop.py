@@ -12,11 +12,12 @@ class CombineClips:
 		self.last_frame_timestamp=last_frame_timestamp
 
 	def cut_moments(self):
-		for stamp in self.key_moments_timestamp_array:
+		for stamp in range(len(self.key_moments_timestamp_array)):
 			# extracting subclips and saving as 'test{INDEX}.mp4'
-			ffmpeg_extract_subclip("sample_video.mp4", max(0,stamp-2000) , min(stamp+2000,self.last_frame_timestamp) , targetname="test{}.mp4".format(index(stamp)+1))
+			ffmpeg_extract_subclip("sample_video.mp4", max(0,self.key_moments_timestamp_array[stamp]-2) , min(self.key_moments_timestamp_array[stamp]+2,self.last_frame_timestamp) , targetname="test{}.mp4".format((stamp)+1))
 
 	def combine_clips(self):
+		#this function drops audio currently
 		video_index=0
 
 		# making list of all mp4 files with filename starting with "test"
@@ -59,6 +60,8 @@ class CombineClips:
 		cap.release()
 		out.release()
 		print("end.")
-		
-cc=CombineClips()
+
+timestamp=[x for x in range(1,1000,5)]
+cc=CombineClips(timestamp,120)
+cc.cut_moments()
 cc.combine_clips()
