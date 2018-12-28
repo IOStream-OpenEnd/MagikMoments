@@ -41,7 +41,7 @@ Open CMD/Terminal, navigate inside MagikMoments/src/Test1/ directory and run :
 
 To complete the project we need to do the following task one by one.
 
-- [x] Create frames of given video.
+- [ ] Create frames of given video, every 5 seconds. (Partially done)
 
 - [x] Detect faces from the frames. Should be able to detect multiple faces in one image.
 

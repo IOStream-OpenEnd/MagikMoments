@@ -23,6 +23,7 @@ class MyClassifier:
 			success, image = vidcap.read()
 			print(f'Read frame {frame_no}:', success)
 			frame_no += 1
+		#return frame_no (for testing purpose)
 
 	@staticmethod
 	def detect_face(img):
@@ -62,6 +63,7 @@ class MyClassifier:
 			for (x, y, w, h) in detected_faces:
 				img = cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
 				yield img[y:y+h, x:x+h]  # Crop color image to face & yield
+		#return img (for testing purpose)
 
 	@staticmethod
 	def check_emotion():
