@@ -100,7 +100,7 @@ class MyClassifier:
         """
 
         cv2.imshow('Image', img)
-        cv2.waitKey(2000)  # Display for 2 secs only
+        cv2.waitKey(250)  # Display for 0.25 secs only
         return None
 
     @staticmethod
