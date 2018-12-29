@@ -1,5 +1,7 @@
 import os
 import random as ra
+import fnmatch as fn
+import shutil as sh
 
 from moviepy.editor import VideoFileClip, concatenate_videoclips
 
@@ -25,7 +27,20 @@ class CombineClips:
 		self.moments_timestamp = moments_timestamp
 		clip_count = 0
 
-		if not os.path.exists("clips"):  # Check for clips directory
+		if os.path.exists("clips"):  # Check for clips directory
+			for file in os.listdir('.'):
+				if fn.fnmatch(file, '*.mp4'):
+					print("There are already existing clips in your clips directory.")
+					clear = input("Clear them ? [y/n]: ")
+					if clear == 'y':
+						try:
+							sh.rmtree("clips")  # Delete existing clips folder with clips
+							break
+						except OSError as e:
+							print("Error: %s - %s." % (e.filename, e.strerror))
+					else:
+						print("Existing clips inside clips directory will not be not deleted.")
+		if not os.path.exists("clips"):
 			os.mkdir("clips")  # Create it if not existing to store clips
 
 		with VideoFileClip(self.input_file) as video:
