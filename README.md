@@ -62,7 +62,3 @@ List of Contributors
 - aayush1205
 - DeboDevelop
 - shawayux
-
-## License
-
-TBD
