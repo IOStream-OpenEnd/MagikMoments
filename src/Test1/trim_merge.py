@@ -7,25 +7,29 @@ from moviepy.editor import VideoFileClip, concatenate_videoclips
 
 
 class CombineClips:
-	def __init__(self, input_file):
-		"""Stores the parameters as class attributes for cu_moments() to access.
+	def __init__(self):
+		"""Stores the parameters as class attributes for cu_moments() to access."""
 
-		:param input_file:  Name of input file.
-
-		"""
 		self.moments_timestamp = None
-		self.input_file = input_file
-		self.duration = VideoFileClip(input_file).duration  # Total seconds of the video
+		self.input_file = None
+		self.duration = None  # Total seconds of the video
 
-	def cut_moments(self, moments_timestamp):
+	def cut_moments(self, moments_timestamp, input_file):
 		"""Cuts the input video at the time stamps, each of 5 seconds - 2.5 seconds before and 2.5 seconds after time stamp.
 
 		:param moments_timestamp: List/Tuple containing the time stamps.
+		:param input_file:  Name of input file.
 		:return: None
 		"""
 
 		self.moments_timestamp = moments_timestamp
+		self.input_file = input_file
+		self.duration = VideoFileClip(input_file).duration
+
 		clip_count = 0
+
+		if not os.path.isfile(self.input_file):  # check if input file exists
+			return None
 
 		if os.path.exists("clips"):  # Check for clips directory
 			for file in os.listdir('.'):
@@ -40,6 +44,7 @@ class CombineClips:
 							print("Error: %s - %s." % (e.filename, e.strerror))
 					else:
 						print("Existing clips inside clips directory will not be not deleted.")
+
 		if not os.path.exists("clips"):
 			os.mkdir("clips")  # Create it if not existing to store clips
 

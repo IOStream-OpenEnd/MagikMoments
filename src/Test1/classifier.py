@@ -126,7 +126,7 @@ def main():
     input_video = "sample_video.mp4"
 
     classifier = MyClassifier()
-    trim_merge = CombineClips(input_video)
+    trim_merge = CombineClips()
 
     for frame in classifier.create_frames(input_video):  # Get frame
 
@@ -145,7 +145,7 @@ def main():
         print(f"Face count = {count}")
         print()
 
-    trim_merge.cut_moments(moments_timestamps)
+    trim_merge.cut_moments(input_video, moments_timestamps)
     trim_merge.combine_clips("some_file.mp4")
 
     classifier.destroy()
