@@ -1,5 +1,8 @@
+import os.path
+
 import cv2
 
+from src.Test1.trim_merge import CombineClips
 
 class MyClassifier:
 
@@ -10,25 +13,31 @@ class MyClassifier:
     def create_frames(video_file):
         """Generator function that yields frames of the video.
 
-        Arguments :
-        video_file = Input video file name
+        :param video_file: Input video file name.
+        :returns :  If file not exists -> None.
+                    If reads frame -> yields frames as numpy.ndarray objects.
+                    If reads no frame -> None.
         """
 
         global frame_no
+        global fps
+
+        if not os.path.isfile(video_file):  # check if file exists
+            return None
 
         vidcap = cv2.VideoCapture(video_file)
         success, image = vidcap.read()
-        fps = int(vidcap.get(cv2.CAP_PROP_FPS))
+        fps = int(vidcap.get(cv2.CAP_PROP_FPS))  #  Get fps of video
         while success:
+
             # 5*fps = 5 seconds. So if frame_no is a multiple of (5*fps), then we get every first frame of the 1st,5th,10th,15th second and so on
             if frame_no is 0 or frame_no % (5 * fps) == 0:
                 print(f'Read frame : {frame_no} ({int(frame_no / fps)}th second) ')
-                yield image  # return img (for testing purpose)
+                yield image
 
             success, image = vidcap.read()
 
-            if not success:
-                return False
+            if not success: return None
 
             frame_no += 1
 
@@ -36,8 +45,9 @@ class MyClassifier:
     def detect_face(img):
         """Generator function that yields detected faces from the frame.
 
-        Arguments :
-        img = The numpy object with picture as a set of matrices
+        :param img: The numpy.ndarray object with picture as a set of matrices.
+        :returns : If face detected -> (img, 1)
+                   If no face detected -> (None, 0)
         """
 
         global face_detector1
@@ -68,8 +78,7 @@ class MyClassifier:
         if detected_faces is not None:
             for (x, y, w, h) in detected_faces:
                 img = cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
-                yield (img, 1) # Sending complete image for testing purpose
-                # original line is 73
+                yield (img, 1) # Sending complete image for testing purpose # Issue of haarcascade false positives
                 # yield (img[y:y + h, x:x + h], 1)  # Crop color image to face & yield
 
         else:
@@ -86,53 +95,68 @@ class MyClassifier:
     def show_face(img):
         """Displays the image.
 
-        Arguments :
-        img = The numpy object with picture as a set of matrices
+        :param img: The numpy.ndarray object with picture as a set of matrices
+        :return : None
         """
 
         cv2.imshow('Image', img)
         cv2.waitKey(2000)  # Display for 2 secs only
-
-    @staticmethod
-    def output():
-
-        # Code and docstring will be added accordingly
-
-        pass
+        return None
 
     @staticmethod
     def destroy():
+        """Destroys all OpenCV created windows.
+
+        :return: None
+        """
         cv2.destroyAllWindows()
+        return None
 
 
 def main():
+    """Checks for faces in frames.
+
+    :return: None
+    """
+
+    global frame_no
+    global fps
+    global moments_timestamps
+
+    input_video = "sample_video.mp4"
+
     classifier = MyClassifier()
+    trim_merge = CombineClips(input_video)
 
-    print()
-
-    for frame in classifier.create_frames("sample_video.mp4"):  # Get frame
+    for frame in classifier.create_frames(input_video):  # Get frame
 
         count = 0  # To count no. of faces in the frame
 
         for face in classifier.detect_face(frame):  # Check for a face
 
             if face[0] is not None:
-                classifier.show_face(face[0])
+
                 count += 1
+                classifier.show_face(face[0])
+
+                if count is 1:  # Append once even if two faces inside the frame
+                    moments_timestamps.append(frame_no / fps)
 
         print(f"Face count = {count}")
         print()
 
-    # classifier.output("MagikMoments_video.mp4", 25.0, (350, 350))
-    # Check why commented in line 108
+    trim_merge.cut_moments(moments_timestamps)
+    trim_merge.combine_clips("some_file.mp4")
 
     classifier.destroy()
+    return None
 
 
 if __name__ == '__main__':
 
-    # frame_array = []  # Use not defined currently. Check line 108
+    fps = 0
     frame_no = 0  # Can be used for time stamping audio later
+    moments_timestamps = []
 
     face_detector1 = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
     face_detector2 = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
