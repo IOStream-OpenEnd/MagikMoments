@@ -1,4 +1,4 @@
-# MagikMoments
+# **MagikMoments**
 
 Finds the "magic" and the most happy moments of a given movie and makes a trailer out of it.
 
@@ -18,6 +18,7 @@ Then run :
     ```bash
     pip3 install -r requiremnts.txt 
     ```
+
 ## Running the code :
 
 Open CMD/Terminal, navigate inside MagikMoments/src/Test1/ directory and run :
@@ -29,6 +30,10 @@ Open CMD/Terminal, navigate inside MagikMoments/src/Test1/ directory and run :
     ```bash
     python3 classifier.py
     ```
+
+## Running The Test
+
+TBD
 
 ## Working (Internal):
 
@@ -43,24 +48,21 @@ Open CMD/Terminal, navigate inside MagikMoments/src/Test1/ directory and run :
    be stored into a array.
 7. That array will be passed to `combine_clips` where they will be combined.
 
-# Action Plan for Complete Project (Revised) :
+## Contribution 
 
-To complete the project we need to do the following task one by one.
+Please read contribution.md for details on our code of conduct, and the process for submitting pull requests to us.
 
-- [ ] Create frames of given video, every 5 seconds. (Partially done)
+## Author
 
-- [x] Detect faces from the frames. Should be able to detect multiple faces in one image.
+Supragya Raj
 
-- [ ] Detect hyper emotion from the faces.
+List of Contributors
+- Kogam22
+- masterchef2209
+- aayush1205
+- DeboDevelop
+- shawayux
 
-- [ ] Use timestamps or array or something to store the exact time/frame for the trim.
+##License
 
-- [ ] For each hyper emotion(more like so much emotion), from the original video create a mini video containing 2 secs before the emotion and 2 secs after.
-
-- [ ] Include audio in those mini videos. Either don't remove it during the trim or add it appropriately as per the original later. 
-
-- [ ] Combine all the mini videos into a single.
-
-- [ ] Perform Test Driven Development (TDD) using any testing framework.
-
-- [ ] Create documentation for the project.
+TBD
