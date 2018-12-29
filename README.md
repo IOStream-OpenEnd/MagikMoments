@@ -40,13 +40,9 @@ TBD
 1. Specify the video file to be used.
 2. The video file will be sent to `create_frames` method which is a generator function yielding frames.
 3. The frame from `create_frames` will be passed to `detect_face` method which will check for faces and display if any found.
-4. The faces from `detect_face` will be passed to `check_emotion` method which will check if the face is happy or not and that will also be 
-   stored.
-5. All the face images will be stored in the global array - `frame_array` which will be for creating the final output by combining all the 
-   frames. 
-6. The method `cut_moments` will be called, where it will be check which moments are happy. 4-sec clips will be cut for each moments and it will
-   be stored into a array.
-7. That array will be passed to `combine_clips` where they will be combined.
+4. The faces from `detect_face` will be passed to `check_emotion` method which will check if the face is happy and store timestamp.
+5. The method `cut_moments` will be called, which will cut 5-sec clips will be cut for each moment (2.5 before, 2.5 after) and store clips objects into a array.
+6. That array will be passed to `combine_clips`, which will combine all those clips into a final video.
 
 ## Contribution 
 
@@ -54,9 +50,9 @@ Please read contribution.md for details on our code of conduct, and the process 
 
 ## Author
 
-Supragya Raj
+- Supragya Raj
 
-List of Contributors
+## List of Contributors
 - Kogam22
 - masterchef2209
 - aayush1205
