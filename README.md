@@ -57,4 +57,3 @@ Please read contribution.md for details on our code of conduct, and the process 
 - masterchef2209
 - aayush1205
 - DeboDevelop
-- shawayux
