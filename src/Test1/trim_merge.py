@@ -14,7 +14,7 @@ class CombineClips:
 		self.input_file = None
 		self.duration = None  # Total seconds of the video
 
-	def cut_moments(self, moments_timestamp, input_file):
+	def cut_moments(self, input_file, moments_timestamp):
 		"""Cuts the input video at the time stamps, each of 5 seconds - 2.5 seconds before and 2.5 seconds after time stamp.
 
 		:param moments_timestamp: List/Tuple containing the time stamps.
