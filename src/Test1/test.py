@@ -6,7 +6,7 @@ from moviepy.editor import VideoFileClip
 from nose.tools import assert_almost_equals
 
 class Tests(unittest.TestCase):
-	"""
+
 	def test_create_frames(self):
 		# fetch video
 		vid=cv2.VideoCapture("sample_video.mp4")
@@ -37,7 +37,7 @@ class Tests(unittest.TestCase):
 		else:
 			print("clips folder does not exist")
 			self.assertEqual(1,-1)
-	"""
+	
 	def test_combine_clips(self):
     	# CombineClips object
 		tm=trim_merge.CombineClips()
