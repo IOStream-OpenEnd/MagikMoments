@@ -3,6 +3,7 @@ import os
 import cv2
 import classifier,trim_merge
 from moviepy.editor import VideoFileClip
+from nose.tools import assert_almost_equals
 
 class Tests(unittest.TestCase):
 
@@ -27,7 +28,7 @@ class Tests(unittest.TestCase):
 		timestamps=[x for x in range(0,int(clip.duration),5)]
 
 		# calling cut_moments
-		tm.cut_moments(timestamps,"sample_video.mp4")
+		tm.cut_moments("sample_video.mp4",timestamps)
 
 		# if clips folder exists, the number of timestamps should be equal to number of subclips generated
 		if os.path.exists("clips"):
@@ -36,21 +37,39 @@ class Tests(unittest.TestCase):
 		else:
 			print("clips folder does not exist")
 			self.assertEqual(1,-1)
-    	
-    	
-    # def test_detect_face(self):
-    #     img = cv2.imread("index.jpeg")
-    #     self.assertEqual(len(list(classifier.MyClassifier.detect_face(img))), 1)
+	
+	def test_combine_clips(self):
+    	# CombineClips object
+		tm=trim_merge.CombineClips()
 
-    # def test_check_emotion(self):
-    #     pass
+		# fetching the video clip
+		clip=VideoFileClip("sample_video.mp4")
 
-    # def test_show_face(self):
-    #     img = cv2.imread("index.jpeg")
-    #     self.assertEqual(classifier.MyClassifier.show_face(img), None)
+		# building timestamps list with each timestamp atleast 5 seconds away from the other one
+		timestamps=[x for x in range(0,int(clip.duration),5)]
 
-    
-    	
+		# calling cut_moments
+		tm.cut_moments("sample_video.mp4",timestamps)
+
+		#calling combine_clips
+		tm.combine_clips("some_file.mp4")
+
+		# if file is present and time duration of all subclips + into clip + end clip == time duration of "some_file.mp4" than test pass
+		if not os.path.isfile("some_file.mp4"):
+			print("some_file.mp4 does not exist")
+			self.assertEqual(1,-1)
+		else:
+			video_names=[("clips/" + n) for n in os.listdir('clips/') if n[:4]=="clip" and n[-4:]=='.mp4']
+			intro_clip = VideoFileClip(f"intro_1.mp4")
+			end_clip = VideoFileClip(f"the_end_1.mp4")
+			dur=0
+			for clip_name in video_names:
+				clip = VideoFileClip(clip_name)
+				dur+=clip.duration
+			dur+=intro_clip.duration
+			dur+=end_clip.duration
+			outputvideo = VideoFileClip("some_file.mp4")
+			assert_almost_equals(dur, outputvideo.duration, places=1)
 
 if __name__=='__main__':
 	unittest.main()
