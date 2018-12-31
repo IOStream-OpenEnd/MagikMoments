@@ -56,6 +56,7 @@ class Tests(unittest.TestCase):
 
 		# if file is present and time duration of all subclips + into clip + end clip == time duration of "some_file.mp4" than test pass
 		if not os.path.isfile("some_file.mp4"):
+			print("some_file.mp4 does not exist")
 			self.assertEqual(1,-1)
 		else:
 			video_names=[("clips/" + n) for n in os.listdir('clips/') if n[:4]=="clip" and n[-4:]=='.mp4']
