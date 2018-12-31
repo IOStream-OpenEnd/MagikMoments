@@ -54,6 +54,7 @@ class Tests(unittest.TestCase):
 		#calling combine_clips
 		tm.combine_clips("some_file.mp4")
 
+		# if file is present and time duration of all subclips + into clip + end clip == time duration of "some_file.mp4" than test pass
 		if not os.path.isfile("some_file.mp4"):
 			self.assertEqual(1,-1)
 		else:
@@ -68,21 +69,6 @@ class Tests(unittest.TestCase):
 			dur+=end_clip.duration
 			outputvideo = VideoFileClip("some_file.mp4")
 			assert_almost_equals(dur, outputvideo.duration, places=1)
-    	
-    	
-    # def test_detect_face(self):
-    #     img = cv2.imread("index.jpeg")
-    #     self.assertEqual(len(list(classifier.MyClassifier.detect_face(img))), 1)
-
-    # def test_check_emotion(self):
-    #     pass
-
-    # def test_show_face(self):
-    #     img = cv2.imread("index.jpeg")
-    #     self.assertEqual(classifier.MyClassifier.show_face(img), None)
-
-    
-    	
 
 if __name__=='__main__':
 	unittest.main()
