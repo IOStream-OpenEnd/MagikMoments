@@ -2,7 +2,7 @@ import os.path
 
 import cv2
 
-from src.Test1.trim_merge import CombineClips
+from trim_merge import CombineClips
 
 class MyClassifier:
 
@@ -151,11 +151,11 @@ def main():
     classifier.destroy()
     return None
 
+fps = 0
+frame_no = 0	# Can be used for time stamping audio later
 
 if __name__ == '__main__':
-
-    fps = 0
-    frame_no = 0  # Can be used for time stamping audio later
+  
     moments_timestamps = []
 
     face_detector1 = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")

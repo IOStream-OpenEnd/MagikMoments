@@ -1,29 +1,56 @@
 import unittest
-
+import os
 import cv2
-
-from src.Test1 import classifier
-
+import classifier,trim_merge
+from moviepy.editor import VideoFileClip
 
 class Tests(unittest.TestCase):
 
-    def test_create_frames(self):
-        vid = cv2.VideoCapture("xyz.mp4")
-        self.assertEqual(classifier.MyClassifier.create_frames(vid), None)
+	def test_create_frames(self):
+		# fetch video
+		vid=cv2.VideoCapture("sample_video.mp4")
 
-    def test_detect_face(self):
-        img = cv2.imread("index.jpeg")
-        self.assertEqual(classifier.MyClassifier.detect_face(img), (None, 0))
-        pass
+		# getting fps
+		fps = int(vid.get(cv2.CAP_PROP_FPS))
 
-    def test_check_emotion(self):
-        pass
+		# in create_frames we get frame after every 5 secs so number of frames returned should be equal to (total number of frames in video)/(number of frames per 5 seconds) + 1 {for frame_no=0}
+		self.assertEqual(len(list(classifier.MyClassifier.create_frames("sample_video.mp4"))),int(vid.get(cv2.CAP_PROP_FRAME_COUNT)/(5*fps))+1)
 
-    def test_show_face(self):
-        img = cv2.imread("index.jpeg")
-        self.assertEqual(classifier.MyClassifier.show_face(img), None)
+	def test_cut_moments(self):
+		# CombineClips object
+		tm=trim_merge.CombineClips()
 
-    def test_destroy(self):
-        self.assertEqual(classifier.MyClassifier.destroy(), None)
+		# fetching the video clip
+		clip=VideoFileClip("sample_video.mp4")
 
-    # The outputs need to checked. That I don't know how to.
+		# building timestamps list with each timestamp atleast 5 seconds away from the other one
+		timestamps=[x for x in range(0,int(clip.duration),5)]
+
+		# calling cut_moments
+		tm.cut_moments(timestamps,"sample_video.mp4")
+
+		# if clips folder exists, the number of timestamps should be equal to number of subclips generated
+		if os.path.exists("clips"):
+			clip_list=os.listdir("clips")
+			self.assertEqual(len(clip_list),len(timestamps))
+		else:
+			print("clips folder does not exist")
+			self.assertEqual(1,-1)
+    	
+    	
+    # def test_detect_face(self):
+    #     img = cv2.imread("index.jpeg")
+    #     self.assertEqual(len(list(classifier.MyClassifier.detect_face(img))), 1)
+
+    # def test_check_emotion(self):
+    #     pass
+
+    # def test_show_face(self):
+    #     img = cv2.imread("index.jpeg")
+    #     self.assertEqual(classifier.MyClassifier.show_face(img), None)
+
+    
+    	
+
+if __name__=='__main__':
+	unittest.main()
