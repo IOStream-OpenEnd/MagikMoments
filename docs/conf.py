@@ -16,8 +16,8 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 sys.path.append('/home/tukai/Projects/MagikMoments/src/Test1')
+#sys.path.append('/home/tukai/.local/lib/python2.7/site-packages/moviepy/__init__.pyc')
 #sys.path.insert(0, '/home/tukai/Projects/MagikMoments/src/Test1')
-
 
 # -- Project information -----------------------------------------------------
 
