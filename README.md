@@ -19,6 +19,9 @@ Then run :
     pip3 install -r requiremnts.txt 
     ```
 
+ * The learned weights when the classifier was run: https://drive.google.com/open?id=1-aZlFq9g5dHLGIu-ZjtvzjtVb60M0mB7
+ * The entire model (architecture, layers, and weights) can be found here: https://drive.google.com/open?id=1-Kovmt0wQDeyfYEPW5pIPZ2GyPezW7rv
+
 ## Running the code :
 
 Open CMD/Terminal, navigate inside MagikMoments/src/Test1/ directory and run :

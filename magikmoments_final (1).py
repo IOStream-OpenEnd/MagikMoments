@@ -7,10 +7,9 @@ Original file is located at
     https://colab.research.google.com/drive/1KXX-dwOOiJX-gzuuwGJfODOn_paRP_Lk
 """
 
-# Load the Drive helper and mount
+
 from google.colab import drive
 
-# This will prompt for authorization.
 drive.mount('/content/drive')
 
 !ln -sf /opt/bin/nvidia-smi /usr/bin/nvidia-smi
@@ -93,8 +92,8 @@ print (img_data.shape)
 num_classes = 2
 num_of_samples = img_data.shape[0]
 labels = np.ones((num_of_samples,),dtype='int64')
-labels[0:500]=0
-labels[500:]=1
+labels[0:1500]=0
+labels[1500:]=1
 names = ['happy' , 'not happy']
 
 Y = np_utils.to_categorical(labels, num_classes)
@@ -117,8 +116,8 @@ out = Dense(num_classes, activation='softmax', name='output')(x)
 Magik = Model(image_input, out)
 Magik.summary()
 
-# freeze all the layers except the dense layers
-for layer in custom_vgg_model2.layers[:-3]:
+
+for layer in Magik.layers[:-3]:
 	layer.trainable = False
 
 Magik.summary()
