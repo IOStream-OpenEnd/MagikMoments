@@ -153,14 +153,12 @@ def main():
 
 fps = 0
 frame_no = 0	# Can be used for time stamping audio later
+face_detector1 = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+face_detector2 = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
+face_detector3 = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
+face_detector4 = cv2.CascadeClassifier("haarcascade_frontalface_alt_tree.xml")
 
 if __name__ == '__main__':
   
     moments_timestamps = []
-
-    face_detector1 = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-    face_detector2 = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
-    face_detector3 = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
-    face_detector4 = cv2.CascadeClassifier("haarcascade_frontalface_alt_tree.xml")
-
     main()
