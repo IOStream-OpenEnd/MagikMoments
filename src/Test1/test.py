@@ -47,8 +47,13 @@ class Tests(unittest.TestCase):
         # to count no. of faces in the frame
         count = 0
 
+        face_d1 = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+        face_d2 = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
+        face_d3 = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
+        face_d4 = cv2.CascadeClassifier("haarcascade_frontalface_alt_tree.xml")
+
         # counting no. of frames
-        for face in classifier.MyClassifier.detect_face(cv2.imread("index.jpeg")):
+        for face in classifier.MyClassifier.detect_face(cv2.imread("index.jpeg"), face_d1, face_d2, face_d3, face_d4):
             if face[0] is not None:
                 count += 1
                 classifier.MyClassifier.show_face(face[0])
