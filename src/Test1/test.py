@@ -6,6 +6,21 @@ from moviepy.editor import VideoFileClip
 from nose.tools import assert_almost_equals
 
 class Tests(unittest.TestCase):
+	def test_detect_face(self):
+		# get the number of faces in "index.jpeg" from the user
+		print("Enter the number of faces in index.jpeg")
+		no_of_faces=int(input())
+		# to count no. of faces in the frame
+		count=0
+
+		# counting no. of frames
+		for face in classifier.MyClassifier.detect_face(cv2.imread("index.jpeg")):
+			if face[0] is not None:
+				count+=1
+				classifier.MyClassifier.show_face(face[0])
+
+		# if no. of faces(as given by user) is equal to the number of faces detected by detect_face than test pass
+		self.assertEqual(count,no_of_faces)
 
 	def test_create_frames(self):
 		# fetch video
@@ -70,6 +85,10 @@ class Tests(unittest.TestCase):
 			dur+=end_clip.duration
 			outputvideo = VideoFileClip("some_file.mp4")
 			assert_almost_equals(dur, outputvideo.duration, places=1)
+
+
+
+
 
 if __name__=='__main__':
 	unittest.main()
