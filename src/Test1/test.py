@@ -41,22 +41,20 @@ class Tests(unittest.TestCase):
             self.assertEqual(1, -1)
 
     def test_detect_face(self):
-        img = cv2.imread("index.jpeg")
+        # get the number of faces in "index.jpeg" from the user
+        print("Enter the number of faces in index.jpeg")
+        no_of_faces = int(input())
+        # to count no. of faces in the frame
+        count = 0
 
-        face_d1 = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-        face_d2 = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
-        face_d3 = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
-        face_d4 = cv2.CascadeClassifier("haarcascade_frontalface_alt_tree.xml")
+        # counting no. of frames
+        for face in classifier.MyClassifier.detect_face(cv2.imread("index.jpeg")):
+            if face[0] is not None:
+                count += 1
+                classifier.MyClassifier.show_face(face[0])
 
-        face = classifier.MyClassifier.detect_face(img, face_d1, face_d2, face_d3, face_d4)
-
-        print(face)
-        print(type)
-        # self.assertNotEqual(type(face[1]), "generator")
-
-        self.assertEquals(1, 1)
-
-    # something lame. writing just to get ok
+        # if no. of faces(as given by user) is equal to the number of faces detected by detect_face than test pass
+        self.assertEqual(count, no_of_faces)
 
     def test_combine_clips(self):
         output_file_name = "some_file.mp4"
