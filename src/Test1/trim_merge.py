@@ -14,22 +14,23 @@ class CombineClips:
         self.input_file = None
         self.duration = None  # Total seconds of the video
 
-    def cut_moments(self, moments_timestamp, input_file):
+    def cut_moments(self, input_file, moments_timestamp):
         """Cuts the input video at the time stamps, each of 5 seconds - 2.5 seconds before and 2.5 seconds after time stamp.
 
-		:param moments_timestamp: List/Tuple containing the time stamps.
-		:param input_file:  Name of input file.
-		:return: None
-		"""
+        :param input_file:  Name of input file.
+        :param moments_timestamp: List/Tuple containing the time stamps.
+        :return: None
+        """
 
         self.moments_timestamp = moments_timestamp
         self.input_file = input_file
-        self.duration = VideoFileClip(input_file).duration
-
-        clip_count = 0
 
         if not os.path.isfile(self.input_file):  # check if input file exists
             return None
+
+        self.duration = VideoFileClip(input_file).duration
+
+        clip_count = 0
 
         if os.path.exists("clips"):  # Check for clips directory
             for file in os.listdir('.'):
@@ -65,9 +66,9 @@ class CombineClips:
     def combine_clips(output_file_name):
         """Searches inside the clips directory and merges clips in ascending order.
 
-		:param output_file_name: Name of output file.
-		:return: None
-		"""
+        :param output_file_name: Name of output file.
+        :return: None
+        """
 
         video_files = []  # will store video_clips
 
@@ -89,16 +90,14 @@ class CombineClips:
         choice = ra.randint(1, 2)
         end_clip = VideoFileClip(f"the_end_{choice}.mp4")
 
-
-
-		for clip_name in video_names:
-			clip = VideoFileClip(clip_name)  # Load clip
-			video_files.append(clip)  # Append to video_files
-			if not clip_name == video_names[len(video_names) - 1]:  # Do not append separator after last clip
-				# video_files.append(sep_clip)
-				pass
-			else:
-				video_files.append(end_clip)  # Append end clip at the end
+        for clip_name in video_names:
+            clip = VideoFileClip(clip_name)  # Load clip
+            video_files.append(clip)  # Append to video_files
+            if not clip_name == video_names[len(video_names) - 1]:  # Do not append separator after last clip
+                # video_files.append(sep_clip)
+                pass
+            else:
+                video_files.append(end_clip)  # Append end clip at the end
 
         final_clip = concatenate_videoclips(video_files)  # Merge all clips
         final_clip.write_videofile(output_file_name)  # Output merged clips
