@@ -1,4 +1,4 @@
-# MagikMoments
+# **MagikMoments**
 
 Finds the "magic" and the most happy moments of a given movie and makes a trailer out of it.
 
@@ -18,10 +18,10 @@ Then run :
     ```bash
     pip3 install -r requiremnts.txt 
     ```
-    
-    
+
  * The learned weights when the classifier was run: https://drive.google.com/open?id=1-aZlFq9g5dHLGIu-ZjtvzjtVb60M0mB7
  * The entire model (architecture, layers, and weights) can be found here: https://drive.google.com/open?id=1-Kovmt0wQDeyfYEPW5pIPZ2GyPezW7rv
+
 ## Running the code :
 
 Open CMD/Terminal, navigate inside MagikMoments/src/Test1/ directory and run :
@@ -34,31 +34,29 @@ Open CMD/Terminal, navigate inside MagikMoments/src/Test1/ directory and run :
     python3 classifier.py
     ```
 
+## Running The Test
+
+TBD
+
 ## Working (Internal):
 
 1. Specify the video file to be used.
 2. The video file will be sent to `create_frames` method which is a generator function yielding frames.
 3. The frame from `create_frames` will be passed to `detect_face` method which will check for faces and display if any found.
-4. All the face images will be stored in the global array - `frame_array` which will be for creating the final output by combining all the frames. 
+4. The faces from `detect_face` will be passed to `check_emotion` method which will check if the face is happy and store timestamp.
+5. The method `cut_moments` will be called, which will cut 5-sec clips will be cut for each moment (2.5 before, 2.5 after) and store clips objects into a array.
+6. That array will be passed to `combine_clips`, which will combine all those clips into a final video.
 
-# Action Plan for Complete Project (Revised) :
+## Contribution 
 
-To complete the project we need to do the following task one by one.
+Please read contribution.md for details on our code of conduct, and the process for submitting pull requests to us.
 
-- [ ] Create frames of given video, every 5 seconds. (Partially done)
+## Author
 
-- [x] Detect faces from the frames. Should be able to detect multiple faces in one image.
+- Supragya Raj
 
-- [ ] Detect hyper emotion from the faces.
-
-- [ ] Use timestamps or array or something to store the exact time/frame for the trim.
-
-- [ ] For each hyper emotion(more like so much emotion), from the original video create a mini video containing 2 secs before the emotion and 2 secs after.
-
-- [ ] Include audio in those mini videos. Either don't remove it during the trim or add it appropriately as per the original later. 
-
-- [ ] Combine all the mini videos into a single.
-
-- [ ] Perform Test Driven Development (TDD) using any testing framework.
-
-- [ ] Create documentation for the project.
+## List of Contributors
+- Kogam22
+- masterchef2209
+- aayush1205
+- DeboDevelop
