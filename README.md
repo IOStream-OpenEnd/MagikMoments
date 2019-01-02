@@ -16,7 +16,7 @@ Then run :
 
 * On Linux :
     ```bash
-    pip3 install -r requiremnts.txt 
+    pip3 install -r requirements.txt 
     ```
 
  * The learned weights when the classifier was run can be found [here](https://drive.google.com/open?id=1-aZlFq9g5dHLGIu-ZjtvzjtVb60M0mB7).
