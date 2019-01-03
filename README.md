@@ -36,7 +36,10 @@ Open CMD/Terminal, navigate inside MagikMoments/src/Test1/ directory and run :
 
 ## Running The Test
 
-TBD
+Pre-requisites:
+- An image with visible human(s).
+- A sample video to test.
+
 
 ## Working (Internal):
 
@@ -49,14 +52,14 @@ TBD
 
 ## Contribution 
 
-Please read contribution.md for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Author
 
-- Supragya Raj
+- [Supragya Raj](https://github.com/supragya)
 
 ## List of Contributors
-- Kogam22
-- masterchef2209
-- aayush1205
-- DeboDevelop
+- [Kogam22](https://github.com/Kogam22)
+- [masterchef2209](https://github.com/masterchef2209)
+- [aayush1205](https://github.com/aayush1205)
+- [DeboDevelop](https://github.com/DeboDevelop)
