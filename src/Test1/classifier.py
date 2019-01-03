@@ -90,10 +90,7 @@ class MyClassifier:
     def check_emotion(img):
 
         # Code and docstring will be added accordingly
-        img = cv2.resize(img, (224, 224))
-        pred = model.predict(img)
-        #print(pred)
-        return True
+        pass
 
     @staticmethod
     def show_face(img):
