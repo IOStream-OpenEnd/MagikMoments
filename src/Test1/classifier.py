@@ -3,7 +3,9 @@ import os.path
 import cv2
 
 from src.Test1.trim_merge import CombineClips
-
+from keras.models import load_model
+model=load_model("Magik2.h5")
+model.load_weights("MagikWeights2.h5")
 
 class MyClassifier:
 
@@ -85,11 +87,13 @@ class MyClassifier:
             return tuple([None, 0])
 
     @staticmethod
-    def check_emotion():
+    def check_emotion(img):
 
         # Code and docstring will be added accordingly
-
-        pass
+        img = cv2.resize(img, (224, 224))
+        pred = model.predict(img)
+        #print(pred)
+        return True
 
     @staticmethod
     def show_face(img):
@@ -139,8 +143,8 @@ def main():
         for face, boolean in classifier.detect_face(frame, face_d1, face_d2, face_d3, face_d4):  # Check for a face
 
             if face is not None:
-
-                count += 1
+                if MyClassifier.check_emotion(face):
+                    count += 1
                 classifier.show_face(face)
 
                 if count is 1:  # Append once even if two faces inside the frame

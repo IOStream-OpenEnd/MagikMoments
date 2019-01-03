@@ -84,7 +84,14 @@ class Tests(unittest.TestCase):
         self.assertEquals(os.path.isfile("some_file.mp4"), True)
 
     def test_check_emotion(self):
-        pass
+        img = cv2.imread("index.jpg")
+        print("Enter 1 if image is happy 0 if not happy")
+        x=int(input())
+        if(x==1):
+            self.assertEqual(classifier.check_emotion(img),True)
+        else:
+            self.assertEqual(classifier.check_emotion(img),False)
+
 
     def test_show_face(self):
         img = cv2.imread("index.jpeg")
