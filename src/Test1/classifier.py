@@ -146,7 +146,7 @@ def main():
 
     moments_timestamps = []
 
-    input_video = "sample_video.mp4"
+    input_video = input("Enter path to the video file : ")
 
     # Load face detector objects
     face_d1 = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
