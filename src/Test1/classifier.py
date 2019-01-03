@@ -169,14 +169,13 @@ def main():
 
         for face, x, y, w, h in classifier.detect_face(frame, face_d1, face_d2, face_d3):  # Check for a face
 
-            emotion = ""  # Because there can be two face in an image, displays emotions side by side serially
-            emotion += classifier.check_emotion(face, x, y, w, h, model, emotions) + " "
+            emotion = classifier.check_emotion(face, x, y, w, h, model, emotions)
+            if emotion is "happy":
+                count += 1
+                classifier.show_face(face, emotion)
 
-            count += 1
-            classifier.show_face(face, emotion)
-
-            if count is 1:  # Append once even if two faces inside the frame
-                moments_timestamps.append(frame_no / fps)
+                if count is 1:  # Append timestamp once even if two faces inside the frame
+                    moments_timestamps.append(frame_no / fps)
 
         print(f"Face count = {count}")
         print()
