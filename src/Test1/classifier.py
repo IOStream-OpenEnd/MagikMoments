@@ -1,6 +1,9 @@
 import os.path
 
+from keras.models import load_model
+from keras.preprocessing import image as im
 import cv2
+import numpy as np
 
 from src.Test1.trim_merge import CombineClips
 
@@ -43,25 +46,22 @@ class MyClassifier:
             frame_no += 1
 
     @staticmethod
-    def detect_face(img, face_d1, face_d2, face_d3, face_d4):
+    def detect_face(img, face_d1, face_d2, face_d3):
         """Generator function that yields detected faces from the frame.
 
         :param img: The numpy.ndarray object with picture as a set of matrices.
         :param face_d1: Obj loaded with haarcascade_frontalface_default.xml
-        :param face_d2: Obj loaded with haarcascade_frontalface_alt2.xml
-        :param face_d3: Obj loaded with haarcascade_frontalface_alt.xml
-        :param face_d4: Obj loaded with haarcascade_frontalface_alt_tree.xml
+        :param face_d2: Obj loaded with haarcascade_frontalface_alt.xml
+        :param face_d3: Obj loaded with haarcascade_frontalface_alt2.xml
         :returns : If face detected -> (img, 1)
                    If no face detected -> (None, 0)
         """
 
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # Convert img to GrayScale
-        # faces = face_cascade.detectMultiScale(gray, 1.3, 5) #detect in gray
 
-        faces1 = face_d1.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=10, minSize=(5, 5), flags=cv2.CASCADE_SCALE_IMAGE)
-        faces2 = face_d2.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=10, minSize=(5, 5), flags=cv2.CASCADE_SCALE_IMAGE)
-        faces3 = face_d3.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=10, minSize=(5, 5), flags=cv2.CASCADE_SCALE_IMAGE)
-        faces4 = face_d4.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=10, minSize=(5, 5), flags=cv2.CASCADE_SCALE_IMAGE)
+        faces1 = face_d1.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=10, minSize=(5, 5), flags=cv2.CASCADE_SCALE_IMAGE)
+        faces2 = face_d2.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=10, minSize=(5, 5), flags=cv2.CASCADE_SCALE_IMAGE)
+        faces3 = face_d3.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=10, minSize=(5, 5), flags=cv2.CASCADE_SCALE_IMAGE)
 
         # Check which Cascade detected face(s)
         if len(faces1) > 0:
@@ -70,36 +70,61 @@ class MyClassifier:
             detected_faces = faces2
         elif len(faces3) > 0:
             detected_faces = faces3
-        elif len(faces4) > 0:
-            detected_faces = faces4
         else:
             detected_faces = None
 
         if detected_faces is not None:
+
+            # x,y = x,y coordinates
+            # w,h = width, height
             for (x, y, w, h) in detected_faces:
                 img = cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
-                yield tuple([img, 1])  # Sending complete image for testing purpose # Issue of haarcascade false positives
-                # yield (img[y:y + h, x:x + h], 1)  # Crop color image to face & yield
+                # yield tuple([img, 1])  # Sending complete image for testing purpose # Issue of haarcascade false positives
+                yield (img, x, y, w, h)  # Crop color image to face & yield
 
         else:
-            return tuple([None, 0])
+            return None
 
     @staticmethod
-    def check_emotion():
+    def check_emotion(img, x, y, w, h, model, emotions):
+        """Checks if image is happy / not happy.
 
-        # Code and docstring will be added accordingly
+        :param img: The numpy.ndarray object with picture as a set of matrices.
+        :param x: x-coordinate of the face in img
+        :param y: y-coordinate of face in img
+        :param w: width of face
+        :param h: height of face
+        :param model: pre trained model with weights
+        :param emotions: list of possible classifications
+        :return: predicted label
+        """
 
-        pass
+        adjust_img = img[y:y+h, x:x+w]  # Crop img to the face
+        adjust_img = cv2.resize(adjust_img, (224, 224))  # Resize img to fit the ML model
+
+        img_tensor = im.img_to_array(adjust_img)
+        img_tensor = np.expand_dims(img_tensor, axis=0)
+
+        img_tensor /= 255  # pixels are in scale of [0, 255]. normalize all pixels in scale of [0, 1]
+
+        predictions = model.predict(img_tensor)  # store probabilities of 2 facial expressions
+
+        label = emotions[np.argmax(predictions)]  # Get label with most probability
+        confidence = np.max(predictions)  # Get the confidence of that label
+
+        cv2.putText(img, label + " : " + str(confidence), (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+        return label
 
     @staticmethod
-    def show_face(img):
+    def show_face(img, emotion):
         """Displays the image.
 
         :param img: The numpy.ndarray object with picture as a set of matrices
+        :param emotion: The emotion label
         :return : None
         """
 
-        cv2.imshow('Image', img)
+        cv2.imshow(emotion, img)
         cv2.waitKey(250)  # Display for 0.25 secs only
         return None
 
@@ -123,11 +148,17 @@ def main():
 
     input_video = "sample_video.mp4"
 
-    # face detectors
+    # Load face detector objects
     face_d1 = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-    face_d2 = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
-    face_d3 = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
-    face_d4 = cv2.CascadeClassifier("haarcascade_frontalface_alt_tree.xml")
+    face_d2 = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
+    face_d3 = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
+
+    # Load ML model and compile
+    model = load_model("Magik2.h5")
+
+    model.compile(loss='categorical_crossentropy', optimizer='adadelta', metrics=['accuracy'])
+
+    emotions = ('happy', 'not happy')
 
     classifier = MyClassifier()
     trim_merge = CombineClips()
@@ -136,15 +167,16 @@ def main():
 
         count = 0  # To count no. of faces in the frame
 
-        for face, boolean in classifier.detect_face(frame, face_d1, face_d2, face_d3, face_d4):  # Check for a face
+        for face, x, y, w, h in classifier.detect_face(frame, face_d1, face_d2, face_d3):  # Check for a face
 
-            if face is not None:
+            emotion = ""  # Because there can be two face in an image, displays emotions side by side serially
+            emotion += classifier.check_emotion(face, x, y, w, h, model, emotions) + " "
 
-                count += 1
-                classifier.show_face(face)
+            count += 1
+            classifier.show_face(face, emotion)
 
-                if count is 1:  # Append once even if two faces inside the frame
-                    moments_timestamps.append(frame_no / fps)
+            if count is 1:  # Append once even if two faces inside the frame
+                moments_timestamps.append(frame_no / fps)
 
         print(f"Face count = {count}")
         print()
