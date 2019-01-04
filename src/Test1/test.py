@@ -3,6 +3,7 @@ import os
 
 import cv2
 from moviepy.editor import VideoFileClip
+from keras.models import load_model
 
 from src.Test1 import classifier, trim_merge
 
@@ -42,23 +43,28 @@ class Tests(unittest.TestCase):
 
     def test_detect_face(self):
         # get the number of faces in "index.jpeg" from the user
-        print("Enter the number of faces in index.jpeg")
-        no_of_faces = int(input())
+        img_name = input("Enter image name with path : ")
+
+        if not os.path.exists(img_name):
+            print(f"File {img_name} does not exist!")
+            self.assertEqual(1, -1)
+
+        no_of_faces = int(input(f"Enter the no. of faces in {img_name} : "))
         # to count no. of faces in the frame
         count = 0
 
-        face_d1 = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-        face_d2 = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
-        face_d3 = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
-        face_d4 = cv2.CascadeClassifier("haarcascade_frontalface_alt_tree.xml")
+        face_d1 = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
+        face_d2 = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+        face_d3 = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
 
         # counting no. of frames
-        for face in classifier.MyClassifier.detect_face(cv2.imread("index.jpeg"), face_d1, face_d2, face_d3, face_d4):
-            if face[0] is not None:
+        for face, x, y, w, h in classifier.MyClassifier.detect_face(cv2.imread("index.jpeg"), face_d1, face_d2, face_d3):
+            if face is not None:
                 count += 1
-                classifier.MyClassifier.show_face(face[0])
+                classifier.MyClassifier.show_face(face, "none")
 
         # if no. of faces(as given by user) is equal to the number of faces detected by detect_face than test pass
+        print("Haarcascades can sometimes not detect a face. Try with another image.")
         self.assertEqual(count, no_of_faces)
 
     def test_combine_clips(self):
@@ -84,11 +90,38 @@ class Tests(unittest.TestCase):
         self.assertEquals(os.path.isfile("some_file.mp4"), True)
 
     def test_check_emotion(self):
-        pass
+        # get the number of faces in "index.jpeg" from the user
+        img_name = input("Enter image name with path : ")
+
+        if not os.path.exists(img_name):
+            print(f"File {img_name} does not exist!")
+            self.assertEqual(1, -1)
+
+        emotion = input("Is the person in the image happy / not happy ? : ")
+        if emotion != "happy" and emotion != "not happy":
+            print("Please enter proper emotion")
+            self.assertEqual(1, -1)
+
+        model = load_model("Magik2.h5")
+
+        model.compile(loss='categorical_crossentropy', optimizer='adadelta', metrics=['accuracy'])
+
+        emotions = ('happy', 'not happy')
+
+        face_d1 = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
+        face_d2 = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+        face_d3 = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
+
+        # counting no. of frames
+        for face, x, y, w, h in classifier.MyClassifier.detect_face(cv2.imread("index.jpeg"), face_d1, face_d2, face_d3):
+            if face is not None:
+                detected_emotion = classifier.MyClassifier.check_emotion(face, x, y, w, h, model, emotions)
+                print(detected_emotion)
+
+        self.assertEqual(emotion, detected_emotion)
 
     def test_show_face(self):
-        img = cv2.imread("index.jpeg")
-        self.assertEqual(classifier.MyClassifier.show_face(img), None)
+        pass
 
 
 if __name__ == '__main__':
