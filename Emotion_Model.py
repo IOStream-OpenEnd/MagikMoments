@@ -1,12 +1,15 @@
 """
 
-#Mounting google drive to colab
+Mounting google drive to colab
+
+"""
 
 from google.colab import drive
 drive.mount('/content/drive')
 
-#Checking GPU usage
-
+"""
+Checking GPU usage
+"""
 !ln -sf /opt/bin/nvidia-smi /usr/bin/nvidia-smi
 !pip install gputil
 !pip install psutil
@@ -27,7 +30,7 @@ printm()
 
 cd '/content/drive/My Drive'
 
-"""
+
 
 import numpy as np
 import os
@@ -42,7 +45,10 @@ from keras.utils import np_utils
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
 
-# Loading images from the data set
+"""
+Loading images from the data set
+
+"""
 path = '/content/drive/My Drive/weird_Data21'
 folders = os.listdir(path)
 img_data_list = []
@@ -59,7 +65,10 @@ print(f"Final length of img_names - {len(img_names)}")
 happy = img_names[0:1500]
 not_happy = img_names[5000: 6501]
 
-# Loading images and converting to required size
+"""
+Loading images and converting to required size
+
+"""
 start_ti = time.time()
 for img1, img2 in zip(happy, not_happy):
     lp_ti = time.time()
@@ -86,7 +95,7 @@ print(img_data.shape)
 img_data = img_data[0]
 print(img_data.shape)
 
-# Assigning labels to images
+
 num_classes = 2
 num_of_samples = img_data.shape[0]
 labels = np.ones((num_of_samples,), dtype='int64')
@@ -94,14 +103,22 @@ labels[0:1500] = 0
 labels[1500:] = 1
 names = ['happy', 'not happy']
 
-# Converting to one hot encoding
+"""
+Converting to one hot encoding
+
+"""
+
 Y = np_utils.to_categorical(labels, num_classes)
 
-# Shuffling to remove bias from data
 x, y = shuffle(img_data, Y, random_state=2)
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=2)
 
-# Loading and customizing the VGG-16 Model
+"""
+
+Loading and customizing the VGG-16 Model
+
+"""
+
 image_input = Input(shape=(224, 224, 3))
 model = VGG16(input_tensor=image_input, include_top=True, weights='imagenet')
 model.summary()
@@ -113,13 +130,21 @@ out = Dense(num_classes, activation='softmax', name='output')(x)
 Magik = Model(image_input, out)
 Magik.summary()
 
-# Freezing the appropriate layers
+"""
+
+Freezing the appropriate layers
+
+"""
 for layer in Magik.layers[:-3]:
     layer.trainable = False
 Magik.summary()
 Magik.compile(loss='categorical_crossentropy', optimizer='adadelta', metrics=['accuracy'])
 
-# Training the model on the training set and testing on the validation set
+"""
+Training the model on the training set and testing on the validation set
+
+"""
+
 t = time.time()
 hist = Magik.fit(X_train, y_train, batch_size=32, epochs=50, verbose=1, validation_data=(X_test, y_test))
 print('Training time: %s' % (t - time.time()))
@@ -127,6 +152,10 @@ print('Training time: %s' % (t - time.time()))
 
 print("[INFO] loss={:.4f}, accuracy: {:.4f}%".format(loss, accuracy * 100))
 
-# Saving the trained model and weights
+"""
+Saving the trained model and weights
+
+"""
+
 Magik.save("Magik2.h5")
 Magik.save_weights("MagikWeights2.h5")
