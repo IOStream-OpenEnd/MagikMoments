@@ -5,7 +5,7 @@ from keras.preprocessing import image as im
 import cv2
 import numpy as np
 
-from src.Test1.trim_merge import CombineClips
+from src.trim_merge import CombineClips
 
 
 class MyClassifier:

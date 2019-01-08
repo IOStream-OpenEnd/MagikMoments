@@ -5,7 +5,7 @@ import cv2
 from moviepy.editor import VideoFileClip
 from keras.models import load_model
 
-from src.Test1 import classifier, trim_merge
+from src import classifier, trim_merge
 
 
 class Tests(unittest.TestCase):

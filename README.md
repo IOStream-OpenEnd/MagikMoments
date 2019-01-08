@@ -5,34 +5,37 @@ Finds the "magic" and the most happy moments of a given movie and makes a traile
 
 ## Requirements :
 
-Need a working Python 3.6 environment along with pip installed. 
+### To run locally :
+1. A CPU which supports AVX instruction set. Starting with TensorFlow 1.6, binaries use AVX instructions which may not run on older CPUs.The processors with AVX instructions are listed in this 
+[Wikipedia link](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#CPUs_with_AVX).
+2. A working Python 3.6 environment along with pip installed. 
+3. External modules installed. Instructions below :
+    * To install the external modules, open CMD/Terminal and navigate inside the MagikMoments directory.
+    Then run :
+    * On windows :
+        ```bash
+        pip install -r requirements.txt
+        ```
+    
+    * On Linux :
+        ```bash
+        pip3 install -r requirements.txt 
+        ```
 
-To install the external modules, open CMD/Terminal and navigate inside the MagikMoments directory.
-Then run :
-* On windows :
-    ```bash
-    pip install -r requirements.txt
-    ```
+ 4. The learned weights when the classifier was run can be found [here](https://drive.google.com/open?id=1-aZlFq9g5dHLGIu-ZjtvzjtVb60M0mB7).
+ The entire model (architecture, layers, and weights) can be found [here](https://drive.google.com/open?id=1-Kovmt0wQDeyfYEPW5pIPZ2GyPezW7rv).
+ 5. To execute it, open CMD/Terminal, navigate inside `MagikMoments/src/` directory and run :
+    * On Windows :
+        ```bash
+        python classifier.py
+        ``` 
+    * On Linux :
+        ```bash
+        python3 classifier.py
+        ```
 
-* On Linux :
-    ```bash
-    pip3 install -r requirements.txt 
-    ```
-
- * The learned weights when the classifier was run can be found [here](https://drive.google.com/open?id=1-aZlFq9g5dHLGIu-ZjtvzjtVb60M0mB7).
- * The entire model (architecture, layers, and weights) can be found [here](https://drive.google.com/open?id=1-Kovmt0wQDeyfYEPW5pIPZ2GyPezW7rv).
-
-## Running the code :
-
-Open CMD/Terminal, navigate inside MagikMoments/src/Test1/ directory and run :
-* On Windows :
-    ```bash
-    python classifier.py
-    ``` 
-* On Linux :
-    ```bash
-    python3 classifier.py
-    ```
+### Running on Google Colaboratory :
+Navigate to this [Google Colaboratory Link](https://colab.research.google.com/drive/1_-WocNc11cWxlrMmnCRN8jeWxVb5wCc-), copy the jupyter notebook to your drive and run it.
 
 ## Running The Test
 
